@@ -125,16 +125,16 @@
                 const newsContainer = document.getElementById('news-container');
                 newsContainer.innerHTML = '';
 
-                data.news.forEach(article => {
+                data.articles.forEach(article => {
                     const card = document.createElement('div');
                     card.className = 'news-card';
                     
                     card.innerHTML = `
-                        ${article.imageUrl ? `<img src="${article.imageUrl}" alt="${article.title}" onerror="this.style.display='none'">` : ''}
+                        ${article.urlToImage ? `<img src="${article.urlToImage}" alt="${article.title}" onerror="this.style.display='none'">` : ''}
                         <h3>${article.title}</h3>
-                        <p>${article.snippet}</p>
-                        <p><a href="${article.link}" target="_blank">Read more</a></p>
-                        <p><small>${article.date || ''}</small></p>
+                        <p>${article.description || 'No description available'}</p>
+                        <p><a href="${article.url}" target="_blank">Read more</a></p>
+                        <p><small>${new Date(article.publishedAt).toLocaleDateString()}</small></p>
                     `;
                     
                     newsContainer.appendChild(card);

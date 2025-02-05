@@ -6,22 +6,23 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 load_dotenv()
 
-SERPER_API_KEY = os.getenv('SERPER_API_KEY')
-SERPER_URL = "https://google.serper.dev/news"
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
+NEWS_API_URL = "https://newsapi.org/v2/everything"
 
 def fetch_esports_news():
     headers = {
-        'X-API-KEY': SERPER_API_KEY,
-        'Content-Type': 'application/json'
+        'X-Api-Key': NEWS_API_KEY
     }
     
-    payload = {
-        'q': 'esports news',
-        'num': 10
+    params = {
+        'q': 'esports OR "competitive gaming"',
+        'language': 'en',
+        'sortBy': 'publishedAt',
+        'pageSize': 10
     }
     
     try:
-        response = requests.post(SERPER_URL, headers=headers, json=payload)
+        response = requests.get(NEWS_API_URL, headers=headers, params=params)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
